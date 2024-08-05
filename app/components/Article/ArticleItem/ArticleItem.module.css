@@ -1,0 +1,14 @@
+.articleItem {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.articleItem h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.articleItem p {
+  margin: 5px 0;
+  color: #555;
+}

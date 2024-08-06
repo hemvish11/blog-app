@@ -1,0 +1,31 @@
+.main{
+  display: flex;
+  margin-inline: 120px;
+}
+.blogsType{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 20px;
+  font-size: 0.9rem;
+  padding-top: 50px;
+  position: sticky;
+  top: -40px;
+  background: white;
+  z-index: 2;
+  border-bottom: 1px solid #ddd;
+}
+.plusIcon{
+  font-size: 2rem;
+  font-weight: 200;
+}
+.active{
+  border-bottom: 1.5px solid #666666;
+  padding-bottom: 16px;
+}
+.left{
+  width: 70%;
+}
+.right{
+  width: 30%;
+}

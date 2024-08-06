@@ -7,18 +7,17 @@
 }
 .writingLeftImg{
   position: absolute;
-  
+  left: 0.5rem;
 }
 .writingRightImg{
   position: absolute;
   right: 0;
+  transform: rotate(90deg);
 }
-.writingBottomLeft{
+.writingBottomRight{
   position: absolute;
-  bottom: -5rem;
-  /* left: -5rem; */
-  transform: rotate(-3deg);
-
+  bottom: -3rem;
+  right: 0;
 }
 
 .loginContainer {

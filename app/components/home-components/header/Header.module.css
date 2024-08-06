@@ -1,0 +1,26 @@
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.logo {
+  font-size: 2.4rem;
+  font-weight: bold;
+  font-family: "Grenze Gotisch", serif;
+}
+
+.nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+.headingContainer{
+    display: flex;
+    align-items: center;
+}

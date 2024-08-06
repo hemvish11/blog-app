@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import styles from "@/app/login/LoginForm.module.css";
+import styles from "@/app/sign-up/SignUpForm.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
-const LoginForm: React.FC = () => {
+const SignUpForm: React.FC = () => {
   const initialData = {
+    name: "",
     email: "",
     password: "",
   };
@@ -14,39 +15,42 @@ const LoginForm: React.FC = () => {
     setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = 'auto'; // Cleanup function to restore scroll
+      document.body.style.overflow = "auto"; 
     };
   }, []);
   return (
     <>
       <h1 className={styles.logo}>Convey Zone</h1>
       <Image
-        src="/LoginLeft.png"
-        width={300}
-        height={300}
+        src="/SignUpLeft.png"
+        width={400}
+        height={400}
         alt="Writing Image Left"
         className={styles.writingLeftImg}
       />
       <Image
-        src="/LoginRight.png"
-        width={400}
-        height={400}
-        alt="Writing Image Right"
-        className={styles.writingRightImg}
-      />
-      <Image
-        src="/LoginBottomLeft.png"
-        width={400}
-        height={400}
-        alt="Writing Image Bottom Left"
-        className={styles.writingBottomLeft}
+        src="/SignUpRight.png"
+        width={300}
+        height={300}
+        alt="Writing Image Bottom Right"
+        className={styles.writingBottomRight}
       />
       <div className={styles.loginContainer}>
-        <h2 className={styles.heading}>Login</h2>
+        <h2 className={styles.heading}>Sign Up</h2>
         <form>
+          <div className={styles.inputGroup}>
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
           <div className={styles.inputGroup}>
             <label htmlFor="email">Email</label>
             <input
@@ -69,11 +73,11 @@ const LoginForm: React.FC = () => {
           </div>
           <div className={styles.buttonsContainer}>
             <button type="submit" className={styles.button}>
-              Login
+              Sign Up
             </button>
-            <p>Don't have an account?</p>
-            <Link href="/sign-up">
-              <button className={styles.button}>Sign up</button>
+            <p>Already have an account?</p>
+            <Link href="/login">
+              <button className={styles.button}>Login</button>
             </Link>
           </div>
         </form>
@@ -81,4 +85,4 @@ const LoginForm: React.FC = () => {
     </>
   );
 };
-export default LoginForm;
+export default SignUpForm;

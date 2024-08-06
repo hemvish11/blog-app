@@ -1,0 +1,16 @@
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+  border-top: 1px solid #eaeaea;
+  background-color: #f7f4ed;
+}
+
+.footer button {
+  margin: 0 0.7rem;
+  text-decoration: none;
+  color: #666666;
+  font-size: 12px;
+}

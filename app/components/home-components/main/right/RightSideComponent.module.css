@@ -1,0 +1,44 @@
+.container {
+    padding: 20px;
+    border-left: 1px solid #ddd;
+    width: 300px;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    position: sticky;
+    top:0;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.section ul li {
+    margin-bottom: 10px;
+}
+
+.section ul li span {
+    color: #555;
+}
+
+.topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.topics span {
+    background-color: #e0e0e0;
+    padding: 5px 10px;
+    border-radius: 16px;
+    font-size: 14px;
+}

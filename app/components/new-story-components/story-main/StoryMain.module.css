@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 320px;
+  font-family: serif;
+}
+.title {
+  font-size: 48px;
+  font-weight: 500;
+}
+.title:focus {
+  outline: none;
+}
+
+.description {
+  font-size: 24px;
+}
+.description:focus {
+  outline: none;
+}
+
+.inputContainer{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.plusImageTitle{
+    position: absolute;
+    top:18px;
+    left: -50px;
+}
+.plusImageDescription{
+    position: absolute;
+    top:0px;
+    left: -50px;
+}

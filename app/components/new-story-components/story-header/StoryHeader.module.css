@@ -1,0 +1,40 @@
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 10rem;
+
+  /* border-bottom: 1px solid #eaeaea; */
+}
+.headingContainer{
+    position: relative;
+}
+.draft{
+    position: absolute;
+    top: 22px;
+    left: 200px;
+    text-wrap: nowrap;
+    color: #666;
+    font-size: 0.9rem;
+}
+.logo {
+  font-size: 2.4rem;
+  font-weight: bold;
+  font-family: "Grenze Gotisch", serif;
+}
+
+.nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+/* .navLinks {
+  color: #666666;
+  transition: all 100ms;
+}
+.navLinks:hover {
+  transform: scale(1.1);
+} */

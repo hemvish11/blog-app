@@ -20,6 +20,12 @@ const LoginForm: React.FC = () => {
       document.body.style.overflow = 'auto'; // Cleanup function to restore scroll
     };
   }, []);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Form submitted with data:", formData);
+  };
+  
   return (
     <>
       <h1 className={styles.logo}>Convey Zone</h1>
@@ -46,7 +52,7 @@ const LoginForm: React.FC = () => {
       />
       <div className={styles.loginContainer}>
         <h2 className={styles.heading}>Login</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
             <label htmlFor="email">Email</label>
             <input

@@ -4,9 +4,9 @@ import styles from "./Footer.module.css"
 
 const Footer:React.FC = () => {
     return (<footer className={styles.footer}>
-        {footerData.map((link) => {
+        {footerData.map((link,index) => {
           return (
-            <Link href={link.href}>
+            <Link href={link.href} key={index}>
               <button className={styles.navLinks}>{link.name}</button>
             </Link>
           );

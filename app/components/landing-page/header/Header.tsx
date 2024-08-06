@@ -7,9 +7,9 @@ const Header: React.FC = () => {
     <header className={styles.header}>
       <div className={styles.logo}>Convey Zone</div>
       <nav className={styles.nav}>
-        {navLinks.map((link) => {
+        {navLinks.map((link,index) => {
           return (
-            <Link href={link.href}>
+            <Link href={link.href} key={index}>
               <button className={styles.navLinks}>{link.name}</button>
             </Link>
           );

@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./SearchBar.module.css";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/app/store";
-import {
-  setQuery,
-  setFilteredItems,
-  resetFilteredItems,
-} from "@/store/slices/search/searchSlice";
+import { setQuery,setFilteredItems,resetFilteredItems } from "@/store/slices/search/searchSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
 type Blog = {
   id: number;
   name: string;
@@ -14,57 +9,63 @@ type Blog = {
   description: string;
   img: string;
 };
-const SearchBar: React.FC = () => {
-  const blogs: Blog[] = [
-    {
-      id: 1,
-      name: "Hemant",
-      title: "First Blog Post",
-      description:
-        "This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.",
-      img: "",
-    },
-    {
-      id: 2,
-      name: "Sargam",
-      title: "Second Blog Post",
-      description: "This is the second blog post.",
-      img: "",
-    },
-    {
-      id: 3,
-      name: "Rishabh",
-      title: "First Blog Post",
-      description: "This is the first blog post.",
-      img: "",
-    },
-    {
-      id: 4,
-      name: "Ankit",
-      title: "Second Blog Post",
-      description: "This is the second blog post.",
-      img: "",
-    },
-  ];
-  const dispatch = useDispatch<AppDispatch>();
-  const [query, setQuery] = useState("");
-  const [filteredItems, setFilteredItems] = useState<Blog[]>(blogs);
+const SearchBar = () => {
+  // const blogs: Blog[] = [
+  //   {
+  //     id: 1,
+  //     name: "Hemant",
+  //     title: "First Blog Post",
+  //     description:
+  //       "This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.This is the first blog post.",
+  //     img: "",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Sargam",
+  //     title: "Second Blog Post",
+  //     description: "This is the second blog post.",
+  //     img: "",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Rishabh",
+  //     title: "First Blog Post",
+  //     description: "This is the first blog post.",
+  //     img: "",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Ankit",
+  //     title: "Second Blog Post",
+  //     description: "This is the second blog post.",
+  //     img: "",
+  //   },
+  // ];
+
+  const dispatch = useAppDispatch();
+  const allBlogs = useAppSelector((state)=> state.allBlogs.allItems);
+
+  const [query, setQueryState] = useState("");
+  // const [filteredItems, setFilteredItemsState] = useState<Blog[]>(allBlogs);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQueryState(e.target.value);
     dispatch(setQuery(e.target.value));
   };
 
   const performSearch = (searchQuery: string) => {
     if (searchQuery.length >= 3) {
-      const filtered = blogs.filter((blog) => {
+      const filtered = allBlogs.filter((blog) => {
         return blog.title
           .toLowerCase()
           .includes(searchQuery.toLocaleLowerCase());
       });
+      // setFilteredItemsState(filtered);
       dispatch(setFilteredItems(filtered));
-      console.log(filtered);
+      console.log("filtered",filtered);
     } else {
-      dispatch(setFilteredItems(blogs));
+      // setFilteredItems(allBlogs);
+      dispatch(setFilteredItems(allBlogs));
     }
   };
 
@@ -76,7 +77,7 @@ const SearchBar: React.FC = () => {
     return () => {
       clearTimeout(handler);
     };
-  }, [query, dispatch]);
+  }, [query,allBlogs]);
 
   return (
     <form className={styles.searchForm}>

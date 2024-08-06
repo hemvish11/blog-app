@@ -2,8 +2,11 @@
 import styles from "./Main.module.css";
 import ArticleCard from "../../Article/Card/ArticleCard";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import RightSideComponent from "./right/RightSideComponent";
+import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
+// import { setFilteredItems } from "@/store/slices/search/searchSlice";
+import { setAllBlogsSlice } from "@/store/slices/allBlogs/allBlogsSlice";
 
 type Blog = {
   id: number;
@@ -14,18 +17,18 @@ type Blog = {
 };
 
 const Main: React.FC = () => {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const blogs = useAppSelector((state) => state.search.filteredItems);
+  const dispatch = useAppDispatch();
 
   const fetchBlogs = async () => {
-    const response = await fetch("/api", {
+    const response = await fetch("/api/blogs", {
       headers: {
         Accept: "Application/json",
         method: "GET",
       },
     });
     const data: Blog[] = await response.json();
-    setBlogs(data);
-    console.log(data);
+    dispatch(setAllBlogsSlice(data));
   };
   useEffect(() => {
     fetchBlogs();

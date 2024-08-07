@@ -1,7 +1,11 @@
 // src/components/SearchBar.tsx
 import React, { useEffect, useState } from "react";
 import styles from "./SearchBar.module.css";
-import { setQuery, setFilteredItems, resetFilteredItems } from "@/store/slices/search/searchSlice";
+import {
+  setQuery,
+  setFilteredItems,
+  resetFilteredItems,
+} from "@/store/slices/search/searchSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
 
 type Blog = {
@@ -51,7 +55,7 @@ const SearchBar = () => {
     return () => {
       clearTimeout(handler);
     };
-  }, [query, dispatch]);
+  }, [query, dispatch, performSearch]);
 
   return (
     <form className={styles.searchForm}>

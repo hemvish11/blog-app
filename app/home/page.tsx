@@ -1,8 +1,9 @@
-import { AppProps } from "next/app";
+"use client";
 import HeaderHome from "../components/home-components/header/HeaderHome";
 import Main from "../components/home-components/main/Main";
+import protectedAuth from "../components/protectedAuth";
 
-const Home = ({}:AppProps) => {
+const Home = () => {
   return (
     <>
       <HeaderHome />
@@ -11,4 +12,4 @@ const Home = ({}:AppProps) => {
   );
 };
 
-export default Home;
+export default protectedAuth(Home);

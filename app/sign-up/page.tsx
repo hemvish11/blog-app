@@ -4,7 +4,7 @@ import styles from "@/app/sign-up/SignUpForm.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
-import { addUser, setError } from "@/store/slices/users/userSlice";
+// import { addUser, setError } from "@/store/slices/users/userSlice";
 import { useRouter } from "next/navigation";
 
 const SignUpForm: React.FC = () => {
@@ -48,33 +48,33 @@ const SignUpForm: React.FC = () => {
 
   const handleAddUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!formData) return;
+    // if (!formData) return;
 
-    if (!validateName(formData.name)) {
-      dispatch(setError("Please enter a valid name."));
-      return;
-    }
-    if (!validateEmail(formData.email)) {
-      dispatch(setError("Please enter a valid email."));
-      return;
-    }
-    if (!validatePassword(formData.password)) {
-      dispatch(
-        setError(
-          "Please enter a valid password (8 characters, at least one uppercase, one lowercase, one number, and one special character)."
-        )
-      );
-      return;
-    }
+    // if (!validateName(formData.name)) {
+    //   dispatch(setError("Please enter a valid name."));
+    //   return;
+    // }
+    // if (!validateEmail(formData.email)) {
+    //   dispatch(setError("Please enter a valid email."));
+    //   return;
+    // }
+    // if (!validatePassword(formData.password)) {
+    //   dispatch(
+    //     setError(
+    //       "Please enter a valid password (8 characters, at least one uppercase, one lowercase, one number, and one special character)."
+    //     )
+    //   );
+    //   return;
+    // }
 
-    try {
-      await dispatch(addUser(formData));
-      setFormData(initialData);
-      dispatch(setError(""));
-      router.push("/login");
-    } catch (error) {
-      console.error("Failed to add user:", error);
-    }
+    // try {
+    //   await dispatch(addUser(formData));
+    //   setFormData(initialData);
+    //   dispatch(setError(""));
+    //   router.push("/login");
+    // } catch (error) {
+    //   console.error("Failed to add user:", error);
+    // }
   };
 
   return (

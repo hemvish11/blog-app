@@ -4,7 +4,7 @@ import styles from "@/app/login/LoginForm.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
-import { login, setError } from "@/store/slices/users/authSlice";
+// import { login, setError } from "@/store/slices/users/authSlice";
 import { useRouter } from "next/navigation";
 import { getToken } from "../utils/getToken";
 
@@ -42,37 +42,37 @@ const LoginForm: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!formData) return;
+    // if (!formData) return;
 
-    if (!validateEmail(formData.email)) {
-      dispatch(setError("Please enter a valid email."));
-      return;
-    }
-    if (!validatePassword(formData.password)) {
-      dispatch(
-        setError(
-          "Please enter a valid password (8 characters, at least one uppercase, one lowercase, one number, and one special character)."
-        )
-      );
-      return;
-    }
+    // if (!validateEmail(formData.email)) {
+    //   dispatch(setError("Please enter a valid email."));
+    //   return;
+    // }
+    // if (!validatePassword(formData.password)) {
+    //   dispatch(
+    //     setError(
+    //       "Please enter a valid password (8 characters, at least one uppercase, one lowercase, one number, and one special character)."
+    //     )
+    //   );
+    //   return;
+    // }
 
-    try {
-      await dispatch(login(formData));
-    } catch (error) {
-      console.error("Failed to loggin user:", error);
-      dispatch(setError("Failed to loggin user."));
-    }
+    // try {
+    //   await dispatch(login(formData));
+    // } catch (error) {
+    //   console.error("Failed to loggin user:", error);
+    //   dispatch(setError("Failed to loggin user."));
+    // }
   };
-  useEffect(() => {
-    if (getToken()) {
-      setFormData(initialData);
-      dispatch(setError(""));
-      router.push("/home");
-    } else {
-      router.push("/login");
-    }
-  }, [getToken()]);
+  // useEffect(() => {
+  //   if (getToken()) {
+  //     setFormData(initialData);
+  //     dispatch(setError(""));
+  //     router.push("/home");
+  //   } else {
+  //     router.push("/login");
+  //   }
+  // }, [getToken()]);
 
   return (
     <>

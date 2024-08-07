@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
 import { login, setError } from "@/store/slices/users/authSlice";
 import { useRouter } from "next/navigation";
-import { getToken } from "../utils/getToken";
+// import { getToken } from "../utils/getToken";
 
 const LoginForm: React.FC = () => {
   const initialData = {
@@ -64,15 +64,15 @@ const LoginForm: React.FC = () => {
       dispatch(setError("Failed to loggin user."));
     }
   };
-  useEffect(() => {
-    if (getToken()) {
-      setFormData(initialData);
-      dispatch(setError(""));
-      router.push("/home");
-    } else {
-      router.push("/login");
-    }
-  }, [getToken()]);
+  // useEffect(() => {
+  //   if (getToken()) {
+  //     setFormData(initialData);
+  //     dispatch(setError(""));
+  //     router.push("/home");
+  //   } else {
+  //     router.push("/login");
+  //   }
+  // }, [getToken()]);
 
   return (
     <>

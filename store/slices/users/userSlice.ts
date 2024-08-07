@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { redirect } from "next/navigation";
 
 interface User {
   name: string;
@@ -23,6 +24,9 @@ export const addUser = createAsyncThunk(
   "users/addUser",
   async (user: Omit<User, "id">) => {
     const response = await axios.post("/api/users", user);
+    if(response.status===200){
+      redirect("/login");
+    }
     return response.data;
   }
 );

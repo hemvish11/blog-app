@@ -3,7 +3,6 @@ import dbConnect from "../../../lib/dbConnect";
 import User from "@/app/modals/User";
 import bcrypt from "bcryptjs";
 import { Types } from "mongoose";
-import { generateToken } from "@/app/utils/jwt";
 
 const ObjectId = require("mongoose").Types.ObjectId;
 
@@ -34,8 +33,9 @@ export const GET = async (req: NextRequest) => {
     }
     const isMatch = await bcrypt.compare(password, existingUser.password);
     if (isMatch) {
-      const token = generateToken({ _id: existingUser._id });
-      console.log("Route Token: ", token);
+      // const token = generateToken({ _id: existingUser._id });
+      // console.log("Route Token: ", token);
+      const token ="asfasdf";
 
       return new NextResponse(JSON.stringify({ message: "Logged In", token }), {
         status: 200,

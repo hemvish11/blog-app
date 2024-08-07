@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { CredentialsSignin } from "next-auth";
+import { signIn } from "@/auth";
 
 interface AuthState {
   token: string | null;
@@ -15,16 +17,34 @@ const initialState: AuthState = {
 
 export const login = createAsyncThunk(
   "auth/login",
+  // async (credentials: { email: string; password: string }) => {
+  //   const response = await axios.get("/api/users", {
+  //     params: { email: credentials.email, password: credentials.password },
+  //   });
+  //   console.log("RTK: ", response);
+  //   if (response.status === 200) {
+  //     localStorage.setItem("token", response.data.token);
+  //     redirect("/home");
+  //   }
+  //   return response.data.token;
+  // }
   async (credentials: { email: string; password: string }) => {
-    const response = await axios.get("/api/users", {
-      params: { email: credentials.email, password: credentials.password },
-    });
-    console.log("RTK: ", response);
-    if(response.status === 200){
-      localStorage.setItem("token", response.data.token);
+    const email = credentials.email as string|undefined;
+    const password = credentials.password as string|undefined;
+
+    if(!email || !password) throw new Error("Please provide all fields")
+    try {
+      await signIn("credentials",{
+        email: email,
+        password: password,
+        redirect:true,
+        redirectTo:"/home"
+      });
+    } catch (error) {
+      const err = error as CredentialsSignin;
+      return err.message;
     }
-    return response.data.token;
-  }
+  },
 );
 
 const authSlice = createSlice({
@@ -47,7 +67,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         console.log("Fulfilled state: ", action.payload);
         state.status = "succeeded";
-        state.token = action.payload;
+        // state.token = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
         console.log("Rejected state: ", state);

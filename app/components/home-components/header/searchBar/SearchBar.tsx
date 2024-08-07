@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "./SearchBar.module.css";
-import { setQuery,setFilteredItems,resetFilteredItems } from "@/store/slices/search/searchSlice";
+import {
+  setQuery,
+  setFilteredItems,
+  resetFilteredItems,
+} from "@/store/slices/search/searchSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
 type Blog = {
   id: number;
@@ -43,7 +47,7 @@ const SearchBar = () => {
   // ];
 
   const dispatch = useAppDispatch();
-  const allBlogs = useAppSelector((state)=> state.allBlogs.allItems);
+  const allBlogs = useAppSelector((state) => state.allBlogs.allItems);
 
   const [query, setQueryState] = useState("");
   // const [filteredItems, setFilteredItemsState] = useState<Blog[]>(allBlogs);
@@ -62,7 +66,7 @@ const SearchBar = () => {
       });
       // setFilteredItemsState(filtered);
       dispatch(setFilteredItems(filtered));
-      console.log("filtered",filtered);
+      console.log("filtered", filtered);
     } else {
       // setFilteredItems(allBlogs);
       dispatch(setFilteredItems(allBlogs));
@@ -77,7 +81,7 @@ const SearchBar = () => {
     return () => {
       clearTimeout(handler);
     };
-  }, [query,allBlogs]);
+  }, [query, allBlogs, performSearch]);
 
   return (
     <form className={styles.searchForm}>

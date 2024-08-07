@@ -32,7 +32,7 @@ const Main: React.FC = () => {
   };
   useEffect(() => {
     fetchBlogs();
-  }, []);
+  }, [fetchBlogs]);
 
   return (
     <main className={styles.main}>

@@ -1,15 +1,18 @@
 import jwt from "jsonwebtoken";
 
 const secret = process.env.JWT_SECRET || "AKSDJBFASJDHhgsa345";
-export const generateToken = (user: { _id: number }) => {
-  return jwt.sign(user, secret, { expiresIn: "10s" });
-  // return jwt.sign(user, secret, { expiresIn: "24h" });
+export const generateToken = (user: { email: string,password:string }) => {
+  // return jwt.sign(user, secret, { expiresIn: "10s" });
+  return jwt.sign(user, secret, { expiresIn: "24h" });
 };
 
 export const verifyToken = (token: string): any => {
+  console.log("Original token.....", token);
   try {
-    return jwt.verify(token, secret);
+    console.log("Verifying token.....")
+    
+    return jwt.verify(token, process.env.JWT_SECRET||"AKSDJBFASJDHhgsa345");
   } catch (error) {
-    throw new Error("Invalid token");
+    return null;
   }
 };

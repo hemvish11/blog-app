@@ -34,7 +34,7 @@ export const GET = async (req: NextRequest) => {
     }
     const isMatch = await bcrypt.compare(password, existingUser.password);
     if (isMatch) {
-      const token = generateToken({ _id: existingUser._id });
+      const token = generateToken({ email: existingUser.email, password: existingUser.password});
       console.log("Route Token: ", token);
 
       return new NextResponse(JSON.stringify({ message: "Logged In", token }), {

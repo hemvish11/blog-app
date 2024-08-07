@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
 import { login, setError } from "@/store/slices/users/authSlice";
 import { useRouter } from "next/navigation";
-import { getToken } from "../utils/getToken";
 
 const LoginForm: React.FC = () => {
   const initialData = {
@@ -15,8 +14,12 @@ const LoginForm: React.FC = () => {
   };
   const [formData, setFormData] = useState(initialData);
   const dispatch = useAppDispatch();
-  const { token, status, error } = useAppSelector((state) => state.auth);
+  const { token, error } = useAppSelector((state) => state.auth);
   const router = useRouter();
+
+  const sleep = (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -59,20 +62,20 @@ const LoginForm: React.FC = () => {
 
     try {
       await dispatch(login(formData));
+      const token = localStorage.getItem("token");
+      console.log("Tokennnnnnn: " + token);
+      if (token) {
+        setFormData(initialData);
+        dispatch(setError(""));
+        // await sleep(1000);
+        router.push("/home");
+      }
     } catch (error) {
       console.error("Failed to loggin user:", error);
       dispatch(setError("Failed to loggin user."));
     }
   };
-  useEffect(() => {
-    if (getToken()) {
-      setFormData(initialData);
-      dispatch(setError(""));
-      router.push("/home");
-    } else {
-      router.push("/login");
-    }
-  }, [getToken()]);
+
 
   return (
     <>
@@ -129,7 +132,8 @@ const LoginForm: React.FC = () => {
               </Link>
             </div>
             <button type="submit" className={styles.button}>
-              {status === "loading" ? "Logging in..." : "Login"}
+              {/* {status === "loading" ? "Logging in..." : "Login"} */}
+              Login
             </button>
             {error && <p className={styles.error}>{error}</p>}
           </div>

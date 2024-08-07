@@ -4,8 +4,14 @@ import homeNavLinks from "@/app/data/home/homeNavLinks";
 import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "./searchBar/SearchBar";
+import {useRouter } from "next/navigation";
 
 const Header: React.FC = () => {
+  const route = useRouter();
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    route.push("/login");
+  };
   return (
     <header className={styles.header}>
       <div className={styles.headingContainer}>
@@ -27,6 +33,7 @@ const Header: React.FC = () => {
             </Link>
           );
         })}
+        <button onClick={handleLogOut}  className={styles.logout}>Log out</button>
       </nav>
     </header>
   );

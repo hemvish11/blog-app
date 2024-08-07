@@ -3,6 +3,10 @@ import { useEffect, useState } from "react";
 import styles from "@/app/login/LoginForm.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
+import { login, setError } from "@/store/slices/users/authSlice";
+import { useRouter } from "next/navigation";
+import { getToken } from "../utils/getToken";
 
 const LoginForm: React.FC = () => {
   const initialData = {
@@ -10,22 +14,66 @@ const LoginForm: React.FC = () => {
     password: "",
   };
   const [formData, setFormData] = useState(initialData);
+  const dispatch = useAppDispatch();
+  const { token, status, error } = useAppSelector((state) => state.auth);
+  const router = useRouter();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = 'auto'; // Cleanup function to restore scroll
+      document.body.style.overflow = "auto"; // Cleanup function to restore scroll
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form submitted with data:", formData);
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
   };
-  
+
+  const validatePassword = (password: string) => {
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!formData) return;
+
+    if (!validateEmail(formData.email)) {
+      dispatch(setError("Please enter a valid email."));
+      return;
+    }
+    if (!validatePassword(formData.password)) {
+      dispatch(
+        setError(
+          "Please enter a valid password (8 characters, at least one uppercase, one lowercase, one number, and one special character)."
+        )
+      );
+      return;
+    }
+
+    try {
+      await dispatch(login(formData));
+    } catch (error) {
+      console.error("Failed to loggin user:", error);
+      dispatch(setError("Failed to loggin user."));
+    }
+  };
+  useEffect(() => {
+    if (getToken()) {
+      setFormData(initialData);
+      dispatch(setError(""));
+      router.push("/home");
+    } else {
+      router.push("/login");
+    }
+  }, [getToken()]);
+
   return (
     <>
       <h1 className={styles.logo}>Convey Zone</h1>
@@ -52,7 +100,7 @@ const LoginForm: React.FC = () => {
       />
       <div className={styles.loginContainer}>
         <h2 className={styles.heading}>Login</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleLogin}>
           <div className={styles.inputGroup}>
             <label htmlFor="email">Email</label>
             <input
@@ -74,13 +122,16 @@ const LoginForm: React.FC = () => {
             />
           </div>
           <div className={styles.buttonsContainer}>
+            <div className={styles.accountExists}>
+              <p>Don't have an account?</p>
+              <Link href="/sign-up">
+                <span className={styles.login}>Sign up</span>
+              </Link>
+            </div>
             <button type="submit" className={styles.button}>
-              Login
+              {status === "loading" ? "Logging in..." : "Login"}
             </button>
-            <p>Don't have an account?</p>
-            <Link href="/sign-up">
-              <button className={styles.button}>Sign up</button>
-            </Link>
+            {error && <p className={styles.error}>{error}</p>}
           </div>
         </form>
       </div>

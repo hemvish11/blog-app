@@ -5,20 +5,20 @@
   font-family: "Grenze Gotisch", serif;
   margin-top: 1rem;
 }
-.writingLeftImg{
+.writingLeftImg {
   position: absolute;
-  
+  width: 20vw;
 }
-.writingRightImg{
+.writingRightImg {
   position: absolute;
   right: 0;
+  width: 32vw;
 }
-.writingBottomLeft{
+.writingBottomLeft {
   position: absolute;
   bottom: -5rem;
   /* left: -5rem; */
   transform: rotate(-3deg);
-
 }
 
 .loginContainer {
@@ -60,9 +60,10 @@
 
 .button {
   padding: 10px 15px;
+  width: 100%;
   border: none;
   border-radius: 4px;
-  background-color: #0070f3;
+  background-color: #111111;
   color: white;
   font-size: 16px;
   cursor: pointer;
@@ -70,11 +71,32 @@
 }
 
 .button:hover {
-  background-color: #005bb5;
+  background-color: #000000;
 }
 
-.buttonsContainer{
+.buttonsContainer {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  gap: 5px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  text-align: center;
+}
+
+.accountExists {
+  display: flex;
+  gap: 10px;
+  align-self: start;
+}
+.login {
+  color: #002147;
+  font-weight: 500;
+}
+.login:hover {
+  color: #056ee6;
+  font-weight: 500;
 }

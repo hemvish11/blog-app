@@ -1,12 +1,15 @@
-// src/store/store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import searchReducer from './slices/search/searchSlice';
 import allBlogsReducer from './slices/allBlogs/allBlogsSlice';
+import userReducer from './slices/users/userSlice';
+import authReducer from './slices/users/authSlice';
 
 const store = configureStore({
     reducer: {
         search: searchReducer,
-        allBlogs: allBlogsReducer
+        allBlogs: allBlogsReducer,
+        users: userReducer,
+        auth: authReducer
     },
 });
 

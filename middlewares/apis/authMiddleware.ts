@@ -1,16 +1,22 @@
-// import { NextRequest } from "next/server";
+import { verifyToken } from "@/app/utils/jwt";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
-// const validateToken = (token:any) => {
-//     // const validToken = token.length;
-//     const validToken = true;
-//     if(!token || !validToken ){
-//         return false;
-//     }
-//     return true; 
-// }
-    
-// export function authMiddleware(req:NextRequest){
-//     const token = req.headers.get("authorization")?.split(" ")[1];
+export function authMiddleware(handler: NextApiHandler) {
+  return async (req: NextApiRequest, res: NextApiResponse) => {
+    const token = req.headers.authorization?.split(" ")[1];
 
-//     return {isValid:validateToken(token)}
-// }
+    if(!token){
+        return res.status(401).json({message:"Authorization token required"});
+    }
+
+    try {
+        verifyToken(token);
+        return handler(req,res);
+    } catch (error) {
+        return res.status(401).json({message:"Invalid token"});
+    }
+  };
+
+}
+
+export default authMiddleware;

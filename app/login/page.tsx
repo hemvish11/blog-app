@@ -7,6 +7,9 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
 // import { login, setError } from "@/store/slices/users/authSlice";
 import { useRouter } from "next/navigation";
 import { getToken } from "../utils/getToken";
+import dbConnect from "../lib/dbConnect";
+import { signIn } from "@/auth";
+import { CredentialsSignin } from "next-auth";
 
 const LoginForm: React.FC = () => {
   const initialData = {
@@ -42,7 +45,7 @@ const LoginForm: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // if (!formData) return;
+    if (!formData) return;
 
     // if (!validateEmail(formData.email)) {
     //   dispatch(setError("Please enter a valid email."));
@@ -63,6 +66,19 @@ const LoginForm: React.FC = () => {
     //   console.error("Failed to loggin user:", error);
     //   dispatch(setError("Failed to loggin user."));
     // }
+    const email = formData.email as string|undefined;
+    const password = formData.password as string|undefined;
+    try {
+      await signIn("credentials",{
+        email,
+        password,
+        redirect:true,
+        redirectTo:"/home"
+      })
+    } catch (error) {
+      const err = error as CredentialsSignin;
+      return err.message;
+    }
   };
   // useEffect(() => {
   //   if (getToken()) {

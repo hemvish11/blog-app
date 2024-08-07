@@ -1,5 +1,5 @@
-import { NextRequest } from "next/server";
+// import { NextRequest } from "next/server";
 
-export function loggingMiddleware(req: NextRequest) {
-  return { response: req.method + " " + req.url };
-}
+// export function loggingMiddleware(req: NextRequest) {
+//   return { response: req.method + " " + req.url };
+// }

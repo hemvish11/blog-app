@@ -9,7 +9,7 @@ const protectedAuth = (WrappedComponent: React.ComponentType<any>) => {
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     const router = useRouter();
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const protectedAuth = (WrappedComponent: React.ComponentType<any>) => {
           });
           if (res.ok) {
             const data = await res.json();
-            console.log("Protected response",data);
+            console.log("Protected response", data);
             setData(data);
           } else {
             const error = await res.json();

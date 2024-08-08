@@ -31,10 +31,15 @@
   align-items: center;
   gap: 40px;
 }
-/* .navLinks {
-  color: #666666;
-  transition: all 100ms;
+.publish{
+  background-color: #16ba00;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 10px;
 }
-.navLinks:hover {
-  transform: scale(1.1);
-} */
+.publish:disabled{
+  background-color: #ccc;
+  cursor: not-allowed;
+}

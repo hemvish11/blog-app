@@ -20,25 +20,21 @@ const initialFormData = {
   description: "",
   img: "/newStory/blog.jpg",
 };
-// const initialFormData = {
-//   userId: typeof window !== "undefined" ? userId : "",
-//   userPhoto: typeof window !== "undefined" ? userPhoto : "",
-//   name: typeof window !== "undefined" ? userName : "",
-//   title: "",
-//   description: "",
-//   img: "/newStory/blog.jpg",
-// };
 
 interface BlogState {
   blog: Blog;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
+  isImageUploaded: boolean;
+  isDescriptionFilled: boolean;
 }
 
 const initialState: BlogState = {
   blog: initialFormData,
   status: "idle",
   error: null,
+  isImageUploaded: true,
+  isDescriptionFilled: false,
 };
 
 export const postBlog = createAsyncThunk(
@@ -80,6 +76,12 @@ const blogSlice = createSlice({
     setFormData: (state, action) => {
       state.blog = action.payload;
     },
+    setIsImageUploaded: (state, action) => {
+      state.isImageUploaded = action.payload;
+    },
+    setIsDescriptionFilled: (state, action) => {
+      state.isDescriptionFilled = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -97,7 +99,13 @@ const blogSlice = createSlice({
   },
 });
 
-export const { setTitle, setDescription, setImage, setFormData } =
-  blogSlice.actions;
+export const {
+  setTitle,
+  setDescription,
+  setImage,
+  setFormData,
+  setIsImageUploaded,
+  setIsDescriptionFilled,
+} = blogSlice.actions;
 
 export default blogSlice.reducer;

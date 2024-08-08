@@ -1,25 +1,13 @@
 "use client";
-import React, { MutableRefObject, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./StoryMain.module.css";
 import Image from "next/image";
 import UploadImage2 from "@/app/extraComponents/uploadImage/UploadImage2";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
-import { setFormData } from "@/store/slices/blogs/blogSlice";
-
-// interface FormData {
-//   userId: string;
-//   userPhoto: string;
-//   name: string;
-//   title: string;
-//   description: string;
-//   img: string;
-// }
-// type SetFormData = React.Dispatch<React.SetStateAction<FormData>>;
-
-// interface StoryMainProps {
-//   formData: FormData;
-//   setFormData: SetFormData;
-// }
+import {
+  setFormData,
+  setIsDescriptionFilled,
+} from "@/store/slices/blogs/blogSlice";
 
 const StoryMain = () => {
   const [showTitleOption, setShowTitleOption] = useState(true);
@@ -56,9 +44,16 @@ const StoryMain = () => {
       userPhoto,
       [name]: value,
     };
-
     dispatch(setFormData(newFormData));
   };
+
+  useEffect(() => {
+    if (blog.title.length > 0 && blog.description.length > 0) {
+      dispatch(setIsDescriptionFilled(true));
+    } else {
+      dispatch(setIsDescriptionFilled(false));
+    }
+  }, [blog.title.length, blog.description.length]);
 
   const handleButtonClick = () => {
     if (!imageRef) return;
@@ -84,6 +79,7 @@ const StoryMain = () => {
             />
           )}
           <input
+            required
             ref={titleRef}
             type="text"
             name="title"

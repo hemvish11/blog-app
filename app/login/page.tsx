@@ -14,7 +14,7 @@ const LoginForm: React.FC = () => {
   };
   const [formData, setFormData] = useState(initialData);
   const dispatch = useAppDispatch();
-  const { token, error } = useAppSelector((state) => state.auth);
+  const { loading, error } = useAppSelector((state) => state.auth);
   const router = useRouter();
 
   const sleep = (ms: number) => {
@@ -134,8 +134,8 @@ const LoginForm: React.FC = () => {
               </Link>
             </div>
             <button type="submit" className={styles.button}>
-              {/* {status === "loading" ? "Logging in..." : "Login"} */}
-              Login
+              {loading ? "Logging in..." : "Login"}
+              {/* Login */}
             </button>
             {error && <p className={styles.error}>{error}</p>}
           </div>

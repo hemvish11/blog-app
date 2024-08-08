@@ -8,10 +8,11 @@ import {
   ref,
 } from "firebase/storage";
 import { app } from "@/firebase";
-import { setFormData } from "@/store/slices/blogs/blogSlice";
+import {
+  setFormData,
+  setIsImageUploaded,
+} from "@/store/slices/blogs/blogSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
-
-interface uploadedImageProps {}
 
 interface uploadedImageProps {
   imageRef: React.RefObject<HTMLInputElement> | null;
@@ -22,7 +23,7 @@ const UploadImage2: React.FC<uploadedImageProps> = ({ imageRef }) => {
 
   const [image, setImage] = useState<File | null>(null);
   const dispatch = useAppDispatch();
-  const {blog} = useAppSelector((state)=> state.blog);
+  const { blog } = useAppSelector((state) => state.blog);
 
   const showPhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
@@ -50,14 +51,17 @@ const UploadImage2: React.FC<uploadedImageProps> = ({ imageRef }) => {
 
     uploadTask.on(
       "state_changed",
-      (snapshot) => {},
+      (snapshot) => {
+        dispatch(setIsImageUploaded(false));
+      },
       (error) => {
         console.error("Upload error:", error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-            const newFormData = {...blog,img: downloadUrl};
+          const newFormData = { ...blog, img: downloadUrl };
           dispatch(setFormData(newFormData));
+          dispatch(setIsImageUploaded(true));
         });
         console.log("Image saved successfully");
       }

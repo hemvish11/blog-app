@@ -1,20 +1,49 @@
 "use client";
 import styles from "./StoryHeader.module.css";
 import homeNavLinks from "@/app/data/home/homeNavLinks";
-import { useAppSelector } from "@/store/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
+import { postBlog } from "@/store/slices/blogs/blogSlice";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-const StoryHeader: React.FC = () => {
-  const {userName} = useAppSelector((state)=> state.auth)
+interface FormData {
+  userId: string;
+  title: string;
+  description: string;
+  img: string;
+}
+interface StoryHeaderProps {
+  formData: FormData;
+}
+
+const StoryHeader: React.FC<StoryHeaderProps> = ({ formData }) => {
+  const { userName } = useAppSelector((state) => state.auth);
+  const { status } = useAppSelector((state) => state.blog);
+  const dispatch = useAppDispatch();
+
+  const handlePostSubmit = async () => {
+    console.log("Submitting the post.....");
+    try {
+      await dispatch(postBlog(formData));
+      if (status === "succeeded") {
+        console.log("Post submitted successfully");
+        redirect("/home");
+      } else {
+        console.log("Post not submitted");
+        redirect("/");
+      }
+    } catch (error) {}
+  };
   return (
     <header className={styles.header}>
       <div className={styles.headingContainer}>
         <span className={styles.logo}>Convey Zone</span>
-        <span className={styles.draft} >Draft in {userName}</span>
+        <span className={styles.draft}>Draft in {userName}</span>
       </div>
 
       <nav className={styles.nav}>
+        <button onClick={handlePostSubmit}> Publish </button>
         {homeNavLinks.map((link) => {
           return (
             <Link href="#" key={link.src}>

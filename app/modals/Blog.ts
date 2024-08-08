@@ -1,8 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface BlogInterface extends Document {
-  id: number;
-  name: string;
+  user: mongoose.Types.ObjectId;
   title: string;
   description: string;
   img: string;

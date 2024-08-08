@@ -9,8 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
 import { setAllBlogsSlice } from "@/store/slices/allBlogs/allBlogsSlice";
 
 type Blog = {
-  id: number;
-  name: string;
+  user: object;
   title: string;
   description: string;
   img: string;
@@ -29,10 +28,11 @@ const Main: React.FC = () => {
     });
     const data: Blog[] = await response.json();
     dispatch(setAllBlogsSlice(data));
+    console.log("All blogs data", data);
   };
   useEffect(() => {
     fetchBlogs();
-  }, [fetchBlogs]);
+  }, []);
 
   return (
     <main className={styles.main}>
@@ -56,7 +56,8 @@ const Main: React.FC = () => {
                 name={blog.name}
                 title={blog.title}
                 description={blog.description}
-                img={blog.description}
+                img={blog.img}
+                // img={"/newStory/blog.jpg"}
               />
             );
           })}

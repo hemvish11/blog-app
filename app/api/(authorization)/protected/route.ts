@@ -29,7 +29,7 @@ export const GET = async (req: NextRequest) => {
       });
 
       return new NextResponse(
-        JSON.stringify({ message: "Logged In", newToken,name: user.name}),
+        JSON.stringify({ message: "Logged In", newToken,name: user.name,userId: user._id}),
         {
           status: 200,
         }

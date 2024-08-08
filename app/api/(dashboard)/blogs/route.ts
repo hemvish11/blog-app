@@ -71,6 +71,8 @@ export const POST = async (req: NextRequest) => {
       description,
       img,
     });
+    await newBlog.save();
+    console.log("New Blog created successfully....In backend",newBlog)
     return new NextResponse(
       JSON.stringify({
         message: "New Blog created successfully",

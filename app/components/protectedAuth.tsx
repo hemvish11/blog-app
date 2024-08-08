@@ -1,7 +1,7 @@
 "use client";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
-import { setUserName } from "@/store/slices/users/authSlice";
+import { setUserId, setUserName } from "@/store/slices/users/authSlice";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -27,6 +27,7 @@ const protectedAuth = (WrappedComponent: React.ComponentType<any>) => {
             const data = await res.json();
             console.log("Protected response", data);
             dispatch(setUserName(data.name));
+            dispatch(setUserId(data.userId));
             setData(data);
           } else {
             const error = await res.json();

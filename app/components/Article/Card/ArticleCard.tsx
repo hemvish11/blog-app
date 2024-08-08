@@ -38,9 +38,9 @@ const ArticleCard = ({ name, title, description, img }: CardPropType) => {
         </div>
 
         <Image
-          width={50}
+          width={100}
           height={50}
-          src="/article-image.jpg"
+          src={img}
           alt="Article"
           className={styles.articleImage}
         />

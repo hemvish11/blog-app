@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 interface AuthState {
   userName: string;
+  userId: string;
   token: string | null;
   loading: boolean;
   error: string | null;
@@ -10,6 +11,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   userName: "",
+  userId: "",
   token: typeof window !== "undefined" ? localStorage.getItem("token") : null,
   loading: false,
   error: null,
@@ -55,6 +57,9 @@ const authSlice = createSlice({
     setUserName: (state, action: PayloadAction<string>) => {
       state.userName = action.payload;
     },
+    setUserId: (state, action: PayloadAction<string>) => {
+      state.userId = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -65,6 +70,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.token = action.payload.token;
         state.userName = action.payload.name;
+        state.userId = action.payload.userId;
         state.loading = false;
       })
       .addCase(login.rejected, (state, action) => {
@@ -74,7 +80,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, setError,setUserName } = authSlice.actions;
+export const { logout, setError,setUserName,setUserId } = authSlice.actions;
 export default authSlice.reducer;
 
 // import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";

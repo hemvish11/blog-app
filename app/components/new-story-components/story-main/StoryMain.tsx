@@ -3,7 +3,20 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./StoryMain.module.css";
 import Image from "next/image";
 
-const StoryMain = () => {
+interface FormData {
+  userId: string;
+  title: string;
+  description: string;
+  img: string;
+}
+type SetFormData = React.Dispatch<React.SetStateAction<FormData>>;
+
+interface StoryMainProps {
+  formData: FormData;
+  setFormData: SetFormData;
+}
+
+const StoryMain: React.FC<StoryMainProps> = ({ formData, setFormData }) => {
   const [showTitleOption, setShowTitleOption] = useState(true);
   const [showDescriptionOption, setShowDescriptionOption] = useState(false);
   const titleRef = useRef(null);
@@ -18,16 +31,17 @@ const StoryMain = () => {
     setShowDescriptionOption(true);
   };
 
-  const [text, setText] = useState<string>("");
   const [rows, setRows] = useState<number>(1);
 
-  useLayoutEffect(() => {
-    const lineCount = Math.ceil(text.length/68)+2;
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    // setText(event.target.value);
+    const lineCount = Math.ceil(formData.description.length / 68) + 2;
     setRows(lineCount);
-  }, [text]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(event.target.value);
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // console.log(formData);
   };
 
   return (
@@ -46,8 +60,11 @@ const StoryMain = () => {
           <input
             ref={titleRef}
             type="text"
+            name="title"
             placeholder="Title"
+            onChange={handleChange}
             className={styles.title}
+            value={formData.title}
             onFocus={handleFocusTitle}
           />
         </div>
@@ -61,11 +78,11 @@ const StoryMain = () => {
               className={styles.plusImageDescription}
             />
           )}
-
           <textarea
             cols={500}
             ref={descriptionRef}
-            value={text}
+            value={formData.description}
+            name="description"
             onChange={handleChange}
             rows={rows}
             placeholder="Tell your story..."

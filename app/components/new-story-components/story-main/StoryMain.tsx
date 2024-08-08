@@ -5,6 +5,7 @@ import Image from "next/image";
 
 interface FormData {
   userId: string;
+  userPhoto:string;
   name:string;
   title: string;
   description: string;

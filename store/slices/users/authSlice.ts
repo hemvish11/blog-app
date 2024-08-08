@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 interface AuthState {
   userName: string;
+  userPhoto:string;
   userId: string;
   token: string | null;
   loading: boolean;
@@ -11,6 +12,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   userName: "",
+  userPhoto:"/login/user.png",
   userId: "",
   token: typeof window !== "undefined" ? localStorage.getItem("token") : null,
   loading: false,
@@ -60,6 +62,9 @@ const authSlice = createSlice({
     setUserId: (state, action: PayloadAction<string>) => {
       state.userId = action.payload;
     },
+    setUserPhoto: (state, action: PayloadAction<string>) => {
+      state.userPhoto = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -71,6 +76,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.userName = action.payload.name;
         state.userId = action.payload.userId;
+        state.userPhoto = action.payload.userPhoto;
         state.loading = false;
       })
       .addCase(login.rejected, (state, action) => {
@@ -80,7 +86,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, setError,setUserName,setUserId } = authSlice.actions;
+export const { logout, setError,setUserName,setUserId,setUserPhoto } = authSlice.actions;
 export default authSlice.reducer;
 
 // import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";

@@ -2,7 +2,6 @@
 import React, { MutableRefObject, useRef, useState } from "react";
 import styles from "./StoryMain.module.css";
 import Image from "next/image";
-import UploadImage from "@/app/extraComponents/uploadImage/UploadImage";
 import UploadImage2 from "@/app/extraComponents/uploadImage/UploadImage2";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
 import { setFormData } from "@/store/slices/blogs/blogSlice";

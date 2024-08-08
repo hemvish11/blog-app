@@ -6,9 +6,10 @@ import { useState } from "react";
 import { useAppSelector } from "@/store/hooks/hooks";
 
 const NewStoryPage = () => {
-  const { userId } = useAppSelector((state) => state.auth);
+  const { userId ,userName} = useAppSelector((state) => state.auth);
   const initialFormData = {
     userId: typeof window !== "undefined" ? userId : "",
+    name: typeof window !== "undefined" ? userName : "",
     title: "",
     description: "",
     img: "/newStory/blog.jpg",

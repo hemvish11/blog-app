@@ -10,6 +10,8 @@ import { setAllBlogsSlice } from "@/store/slices/allBlogs/allBlogsSlice";
 
 type Blog = {
   userId: string;
+  userPhoto:string;
+  name:string;
   title: string;
   description: string;
   img: string;
@@ -53,7 +55,8 @@ const Main: React.FC = () => {
             return (
               <ArticleCard
                 key={index}
-                name={"Hv"}
+                userPhoto={blog.userPhoto}
+                name={blog.name}
                 title={blog.title}
                 description={blog.description}
                 img={blog.img}

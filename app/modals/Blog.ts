@@ -2,6 +2,8 @@ import mongoose, { Document, Schema } from "mongoose";
 
 export interface BlogInterface extends Document {
   user: mongoose.Types.ObjectId;
+  userPhoto:string;
+  name: string;
   title: string;
   description: string;
   img: string;
@@ -11,6 +13,13 @@ const blogSchema: Schema = new mongoose.Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  userPhoto: {
+    type: String,
   },
   title: {
     type: String,

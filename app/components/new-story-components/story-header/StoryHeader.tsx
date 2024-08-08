@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 
 interface FormData {
   userId: string;
+  name: string;
   title: string;
   description: string;
   img: string;
@@ -19,21 +20,17 @@ interface StoryHeaderProps {
 
 const StoryHeader: React.FC<StoryHeaderProps> = ({ formData }) => {
   const { userName } = useAppSelector((state) => state.auth);
-  const { status } = useAppSelector((state) => state.blog);
   const dispatch = useAppDispatch();
 
   const handlePostSubmit = async () => {
     console.log("Submitting the post.....");
     try {
       await dispatch(postBlog(formData));
-      if (status === "succeeded") {
-        console.log("Post submitted successfully");
-        redirect("/home");
-      } else {
-        console.log("Post not submitted");
-        redirect("/");
-      }
-    } catch (error) {}
+      redirect("/home");
+    } catch (error) {
+      console.log("Post not submitted");
+      redirect("/");
+    }
   };
   return (
     <header className={styles.header}>

@@ -3,6 +3,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 interface Blog {
   userId: string;
+  userPhoto:string;
+  name:string;
   title: string;
   description: string;
   img: string;
@@ -29,6 +31,7 @@ export const postBlog = createAsyncThunk(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        name: blogData.name,
         title: blogData.title,
         description: blogData.description,
         img: blogData.img,

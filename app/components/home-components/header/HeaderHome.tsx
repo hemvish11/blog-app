@@ -5,11 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "./searchBar/SearchBar";
 import {useRouter } from "next/navigation";
+import { useAppDispatch } from "@/store/hooks/hooks";
+import { logout } from "@/store/slices/users/authSlice";
 
 const Header: React.FC = () => {
   const route = useRouter();
+  const dispatch = useAppDispatch();
   const handleLogOut = () => {
-    localStorage.removeItem("token");
+    dispatch(logout());
     route.push("/login");
   };
   return (

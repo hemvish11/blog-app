@@ -9,7 +9,7 @@ const protectedAuth = (WrappedComponent: React.ComponentType<any>) => {
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const token = localStorage.getItem("token");
+    const {token} = useAppSelector((state)=> state.auth)
     const router = useRouter();
 
     useEffect(() => {

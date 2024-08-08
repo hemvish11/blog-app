@@ -6,13 +6,12 @@ import {
   resetFilteredItems,
 } from "@/store/slices/search/searchSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
-type Blog = {
-  id: number;
-  name: string;
+interface Blog {
+  userId:string;
   title: string;
   description: string;
   img: string;
-};
+}
 const SearchBar = () => {
   // const blogs: Blog[] = [
   //   {
@@ -59,7 +58,7 @@ const SearchBar = () => {
 
   const performSearch = (searchQuery: string) => {
     if (searchQuery.length >= 3) {
-      const filtered = allBlogs.filter((blog) => {
+      const filtered:Blog[] = allBlogs.filter((blog) => {
         return blog.title
           .toLowerCase()
           .includes(searchQuery.toLocaleLowerCase());

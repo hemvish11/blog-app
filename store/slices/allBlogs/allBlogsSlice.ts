@@ -2,7 +2,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Blog {
-  user:object;
+  userId:string;
   title: string;
   description: string;
   img: string;

@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
 import { setAllBlogsSlice } from "@/store/slices/allBlogs/allBlogsSlice";
 
 type Blog = {
-  user: object;
+  userId: string;
   title: string;
   description: string;
   img: string;
@@ -49,11 +49,11 @@ const Main: React.FC = () => {
           </Link>
         </div>
         {blogs &&
-          blogs.map((blog) => {
+          blogs.map((blog,index) => {
             return (
               <ArticleCard
-                key={blog.id}
-                name={blog.name}
+                key={index}
+                name={"Hv"}
                 title={blog.title}
                 description={blog.description}
                 img={blog.img}

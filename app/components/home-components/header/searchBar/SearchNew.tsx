@@ -8,13 +8,14 @@ import {
 } from "@/store/slices/search/searchSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
 
-type Blog = {
-  id: number;
+interface Blog {
+  userId: string;
+  userPhoto: string;
   name: string;
   title: string;
   description: string;
   img: string;
-};
+}
 
 const SearchBar = () => {
   const blogs: Blog[] = [

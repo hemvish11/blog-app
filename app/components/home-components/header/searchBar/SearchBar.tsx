@@ -7,7 +7,9 @@ import {
 } from "@/store/slices/search/searchSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
 interface Blog {
-  userId:string;
+  userId: string;
+  userPhoto: string;
+  name: string;
   title: string;
   description: string;
   img: string;
@@ -58,7 +60,7 @@ const SearchBar = () => {
 
   const performSearch = (searchQuery: string) => {
     if (searchQuery.length >= 3) {
-      const filtered:Blog[] = allBlogs.filter((blog) => {
+      const filtered: Blog[] = allBlogs.filter((blog) => {
         return blog.title
           .toLowerCase()
           .includes(searchQuery.toLocaleLowerCase());

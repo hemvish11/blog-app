@@ -32,7 +32,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       expiresIn: "1h",
     });
 
-    return new NextResponse(JSON.stringify({ message: "Logged In", token }), {
+    return new NextResponse(JSON.stringify({ message: "Logged In", token,name: existingUser.name }), {
       status: 200,
     });
   } else {

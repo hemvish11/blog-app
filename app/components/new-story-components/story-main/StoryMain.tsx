@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./StoryMain.module.css";
 import Image from "next/image";
 
@@ -17,6 +17,19 @@ const StoryMain = () => {
     setShowTitleOption(false);
     setShowDescriptionOption(true);
   };
+
+  const [text, setText] = useState<string>("");
+  const [rows, setRows] = useState<number>(1);
+
+  useLayoutEffect(() => {
+    const lineCount = Math.ceil(text.length/68)+2;
+    setRows(lineCount);
+  }, [text]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setText(event.target.value);
+  };
+
   return (
     <main>
       <form className={styles.container}>
@@ -49,9 +62,12 @@ const StoryMain = () => {
             />
           )}
 
-          <input
+          <textarea
+            cols={500}
             ref={descriptionRef}
-            type="text"
+            value={text}
+            onChange={handleChange}
+            rows={rows}
             placeholder="Tell your story..."
             className={styles.description}
             onFocus={handleFocusDescription}

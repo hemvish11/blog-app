@@ -1,6 +1,7 @@
 "use client";
 
-import { useAppSelector } from "@/store/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
+import { setUserName } from "@/store/slices/users/authSlice";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -11,6 +12,7 @@ const protectedAuth = (WrappedComponent: React.ComponentType<any>) => {
     const [error, setError] = useState<string | null>(null);
     const {token} = useAppSelector((state)=> state.auth)
     const router = useRouter();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
       const fetchData = async () => {
@@ -24,12 +26,14 @@ const protectedAuth = (WrappedComponent: React.ComponentType<any>) => {
           if (res.ok) {
             const data = await res.json();
             console.log("Protected response", data);
+            dispatch(setUserName(data.name));
             setData(data);
           } else {
             const error = await res.json();
             setError(error.message);
             console.error(error.message);
             router.push("/login"); // Redirect to login if not authenticated
+
           }
         } catch (err) {
           console.error("An error occurred:", err);

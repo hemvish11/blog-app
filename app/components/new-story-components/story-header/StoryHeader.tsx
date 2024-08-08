@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
 import { postBlog } from "@/store/slices/blogs/blogSlice";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 interface FormData {
   userId: string;
@@ -22,15 +22,16 @@ interface StoryHeaderProps {
 const StoryHeader: React.FC<StoryHeaderProps> = ({ formData }) => {
   const { userName } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const handlePostSubmit = async () => {
     console.log("Submitting the post.....");
     try {
       await dispatch(postBlog(formData));
-      redirect("/home");
+      router.push("/home");
     } catch (error) {
       console.log("Post not submitted");
-      redirect("/");
+      router.push("/");
     }
   };
   return (

@@ -2,13 +2,19 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { redirect } from "next/navigation";
 
 interface AuthState {
+  userName: string;
+  userPhoto:string;
+  userId: string;
   token: string | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: AuthState = {
-  token: null,
+  userName: "",
+  userPhoto:"/login/user.png",
+  userId: "",
+  token: typeof window !== "undefined" ? localStorage.getItem("token") : null,
   loading: false,
   error: null,
 };
@@ -31,7 +37,8 @@ export const login = createAsyncThunk(
 
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      return data.token;
+      console.log(data);
+      return data;
     } catch (error) {
       return error;
     }
@@ -49,6 +56,15 @@ const authSlice = createSlice({
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
+    setUserName: (state, action: PayloadAction<string>) => {
+      state.userName = action.payload;
+    },
+    setUserId: (state, action: PayloadAction<string>) => {
+      state.userId = action.payload;
+    },
+    setUserPhoto: (state, action: PayloadAction<string>) => {
+      state.userPhoto = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -56,8 +72,11 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(login.fulfilled, (state, action: PayloadAction<string>) => {
-        state.token = action.payload;
+      .addCase(login.fulfilled, (state, action) => {
+        state.token = action.payload.token;
+        state.userName = action.payload.name;
+        state.userId = action.payload.userId;
+        state.userPhoto = action.payload.userPhoto;
         state.loading = false;
       })
       .addCase(login.rejected, (state, action) => {
@@ -67,7 +86,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, setError } = authSlice.actions;
+export const { logout, setError,setUserName,setUserId,setUserPhoto } = authSlice.actions;
 export default authSlice.reducer;
 
 // import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";

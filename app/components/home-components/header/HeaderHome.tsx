@@ -4,18 +4,24 @@ import homeNavLinks from "@/app/data/home/homeNavLinks";
 import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "./searchBar/SearchBar";
-import {useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/store/hooks/hooks";
+import { logout } from "@/store/slices/users/authSlice";
 
 const Header: React.FC = () => {
   const route = useRouter();
+  const dispatch = useAppDispatch();
   const handleLogOut = () => {
-    localStorage.removeItem("token");
+    dispatch(logout());
     route.push("/login");
   };
   return (
     <header className={styles.header}>
       <div className={styles.headingContainer}>
-        <span className={styles.logo}>Convey Zone</span>
+        <Link href={"/home"}>
+          <span className={styles.logo}>Convey Zone</span>
+        </Link>
+
         <div>
           <SearchBar />
         </div>
@@ -29,11 +35,14 @@ const Header: React.FC = () => {
                 height={25}
                 width={25}
                 alt="Nav icon"
-              ></Image>
+                loading="lazy"
+              />
             </Link>
           );
         })}
-        <button onClick={handleLogOut}  className={styles.logout}>Log out</button>
+        <button onClick={handleLogOut} className={styles.logout}>
+          Log out
+        </button>
       </nav>
     </header>
   );

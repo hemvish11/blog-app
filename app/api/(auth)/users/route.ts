@@ -68,6 +68,7 @@ export const POST = async (req: NextRequest) => {
       name,
       email,
       password: hashedPassword,
+      userPhoto:"/login/user.png"
     });
     await newUser.save();
 

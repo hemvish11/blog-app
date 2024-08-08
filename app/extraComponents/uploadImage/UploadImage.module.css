@@ -1,0 +1,7 @@
+.image{
+    max-width: 300px;
+    margin-inline: auto;
+}
+.defaultUploader{
+    display: none;
+}

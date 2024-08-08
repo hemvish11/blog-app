@@ -85,6 +85,7 @@ const SignUpForm: React.FC = () => {
         width={400}
         height={400}
         alt="Writing Image Left"
+        loading="lazy"
         className={styles.writingLeftImg}
       />
       <Image
@@ -92,6 +93,7 @@ const SignUpForm: React.FC = () => {
         width={300}
         height={300}
         alt="Writing Image Bottom Right"
+        loading="lazy"
         className={styles.writingBottomRight}
       />
       <div className={styles.loginContainer}>

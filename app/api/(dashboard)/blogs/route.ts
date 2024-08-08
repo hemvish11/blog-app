@@ -49,7 +49,7 @@ export const POST = async (req: NextRequest) => {
     const userId = searchParams.get("userId");
 
     const body = await req.json();
-    const { title, description, img } = body;
+    const { name, title, description, img } = body;
 
     if (!userId || !Types.ObjectId.isValid(userId)) {
       return new NextResponse(JSON.stringify({ message: "Invalid userId" }), {
@@ -67,10 +67,14 @@ export const POST = async (req: NextRequest) => {
 
     const newBlog = new Blog({
       user: new Types.ObjectId(userId),
+      userPhoto: user.userPhoto,
+      name,
       title,
       description,
       img,
     });
+    await newBlog.save();
+    console.log("New Blog created successfully....In backend", newBlog);
     return new NextResponse(
       JSON.stringify({
         message: "New Blog created successfully",

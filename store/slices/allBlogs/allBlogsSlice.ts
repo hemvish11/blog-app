@@ -2,7 +2,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Blog {
-  id: number;
+  userId: string;
+  userPhoto: string;
   name: string;
   title: string;
   description: string;

@@ -66,10 +66,12 @@ const protectedAuth = (WrappedComponent: React.ComponentType<any>) => {
     }
 
     if (error) {
+      router.push("/")
       return <div className={styles.processing}>Error: {error}</div>;
     }
 
     if (!token) {
+      router.push("/")
       return <div className={styles.processing}>Access Denied</div>;
     }
 

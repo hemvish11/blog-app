@@ -76,7 +76,6 @@ const LoginForm: React.FC = () => {
     }
   };
 
-
   return (
     <>
       <h1 className={styles.logo}>Convey Zone</h1>
@@ -85,6 +84,7 @@ const LoginForm: React.FC = () => {
         width={300}
         height={300}
         alt="Writing Image Left"
+        loading="lazy"
         className={styles.writingLeftImg}
       />
       <Image
@@ -92,6 +92,7 @@ const LoginForm: React.FC = () => {
         width={400}
         height={400}
         alt="Writing Image Right"
+        loading="lazy"
         className={styles.writingRightImg}
       />
       <Image
@@ -99,6 +100,7 @@ const LoginForm: React.FC = () => {
         width={400}
         height={400}
         alt="Writing Image Bottom Left"
+        loading="lazy"
         className={styles.writingBottomLeft}
       />
       <div className={styles.loginContainer}>

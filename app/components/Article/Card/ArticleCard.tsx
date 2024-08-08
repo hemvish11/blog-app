@@ -25,6 +25,7 @@ const ArticleCard = ({
           width={10}
           // src="/login/user.png"
           src={userPhoto }
+          loading="lazy"
           alt="Author"
           className={styles.authorImage}
         />
@@ -52,6 +53,7 @@ const ArticleCard = ({
           height={50}
           src={img}
           alt="Article"
+          loading="lazy"
           className={styles.articleImage}
         />
       </div>

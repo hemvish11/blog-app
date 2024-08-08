@@ -7,27 +7,30 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 
-interface FormData {
-  userId: string;
-  userPhoto: string;
-  name: string;
-  title: string;
-  description: string;
-  img: string;
-}
-interface StoryHeaderProps {
-  formData: FormData;
-}
+// interface FormData {
+//   userId: string;
+//   userPhoto: string;
+//   name: string;
+//   title: string;
+//   description: string;
+//   img: string;
+// }
+// interface StoryHeaderProps {
+//   formData: FormData;
+// }
 
-const StoryHeader: React.FC<StoryHeaderProps> = ({ formData }) => {
+// const StoryHeader: React.FC<StoryHeaderProps> = ({ formData }) => {
+const StoryHeader = () => {
   const { userName } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { blog } = useAppSelector((state) => state.blog);
 
   const handlePostSubmit = async () => {
     console.log("Submitting the post.....");
     try {
-      await dispatch(postBlog(formData));
+      await dispatch(postBlog(blog));
+      console.log("Post submitted,blog: " + blog);
       router.push("/home");
     } catch (error) {
       console.log("Post not submitted");
@@ -51,7 +54,8 @@ const StoryHeader: React.FC<StoryHeaderProps> = ({ formData }) => {
                 height={25}
                 width={25}
                 alt="Nav icon"
-              ></Image>
+                loading="lazy"
+              />
             </Link>
           );
         })}

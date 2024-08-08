@@ -1,28 +1,36 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { MutableRefObject, useRef, useState } from "react";
 import styles from "./StoryMain.module.css";
 import Image from "next/image";
+import UploadImage from "@/app/extraComponents/uploadImage/UploadImage";
+import UploadImage2 from "@/app/extraComponents/uploadImage/UploadImage2";
+import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
+import { setFormData } from "@/store/slices/blogs/blogSlice";
 
-interface FormData {
-  userId: string;
-  userPhoto:string;
-  name:string;
-  title: string;
-  description: string;
-  img: string;
-}
-type SetFormData = React.Dispatch<React.SetStateAction<FormData>>;
+// interface FormData {
+//   userId: string;
+//   userPhoto: string;
+//   name: string;
+//   title: string;
+//   description: string;
+//   img: string;
+// }
+// type SetFormData = React.Dispatch<React.SetStateAction<FormData>>;
 
-interface StoryMainProps {
-  formData: FormData;
-  setFormData: SetFormData;
-}
+// interface StoryMainProps {
+//   formData: FormData;
+//   setFormData: SetFormData;
+// }
 
-const StoryMain: React.FC<StoryMainProps> = ({ formData, setFormData }) => {
+const StoryMain = () => {
   const [showTitleOption, setShowTitleOption] = useState(true);
   const [showDescriptionOption, setShowDescriptionOption] = useState(false);
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
+  const imageRef = useRef<HTMLInputElement | null>(null);
+  const { userId, userName, userPhoto } = useAppSelector((state) => state.auth);
+  const { blog } = useAppSelector((state) => state.blog);
+  const dispatch = useAppDispatch();
 
   const handleFocusTitle = () => {
     setShowTitleOption(true);
@@ -33,17 +41,32 @@ const StoryMain: React.FC<StoryMainProps> = ({ formData, setFormData }) => {
     setShowDescriptionOption(true);
   };
 
-  const [rows, setRows] = useState<number>(1);
+  const [rows, setRows] = useState<number>(12);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    // setText(event.target.value);
-    const lineCount = Math.ceil(formData.description.length / 68) + 2;
-    setRows(lineCount);
+    event.preventDefault();
     const { name, value } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    // console.log(formData);
+    const lineCount = Math.ceil(blog.description.length / 68) + 5;
+    setRows(lineCount);
+    const newFormData = {
+      ...blog,
+      userId,
+      name: userName,
+      userPhoto,
+      [name]: value,
+    };
+
+    dispatch(setFormData(newFormData));
+  };
+
+  const handleButtonClick = () => {
+    if (!imageRef) return;
+
+    if (imageRef.current) {
+      imageRef.current.click();
+    }
   };
 
   return (
@@ -56,6 +79,8 @@ const StoryMain: React.FC<StoryMainProps> = ({ formData, setFormData }) => {
               height={40}
               src="/newStory/plus.png"
               alt="More icons"
+              loading="lazy"
+              onClick={handleButtonClick}
               className={styles.plusImageTitle}
             />
           )}
@@ -66,24 +91,27 @@ const StoryMain: React.FC<StoryMainProps> = ({ formData, setFormData }) => {
             placeholder="Title"
             onChange={handleChange}
             className={styles.title}
-            value={formData.title}
+            value={blog.title}
             onFocus={handleFocusTitle}
           />
         </div>
+        <UploadImage2 imageRef={imageRef} />
         <div className={styles.inputContainer}>
           {showDescriptionOption && (
             <Image
               width={40}
               height={40}
               src="/newStory/plus.png"
+              loading="lazy"
               alt="More icons"
+              onClick={handleButtonClick}
               className={styles.plusImageDescription}
             />
           )}
           <textarea
             cols={500}
             ref={descriptionRef}
-            value={formData.description}
+            value={blog.description}
             name="description"
             onChange={handleChange}
             rows={rows}

@@ -19,6 +19,7 @@ const Main: React.FC = () => {
         height={500}
         src="/LandingPage3.png"
         alt="Landing page img"
+        loading="lazy"
         className={styles.homepageImg}
       />
     </main>

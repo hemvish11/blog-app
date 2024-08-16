@@ -7,11 +7,20 @@ import RightSideComponent from "./right/RightSideComponent";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
 // import { setFilteredItems } from "@/store/slices/search/searchSlice";
 import { setAllBlogsSlice } from "@/store/slices/allBlogs/allBlogsSlice";
+import { useRouter } from "next/navigation";
+import {
+  setDescription,
+  setImage,
+  setName,
+  setTitle,
+  setUserId,
+  setUserPhoto,
+} from "@/store/slices/article/articleSilce";
 
 type Blog = {
   userId: string;
-  userPhoto:string;
-  name:string;
+  userPhoto: string;
+  name: string;
   title: string;
   description: string;
   img: string;
@@ -19,7 +28,10 @@ type Blog = {
 
 const Main: React.FC = () => {
   const blogs = useAppSelector((state) => state.search.filteredItems);
+  const article = useAppSelector((state) => state.article);
+
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const fetchBlogs = async () => {
     const response = await fetch("/api/blogs", {
@@ -35,6 +47,17 @@ const Main: React.FC = () => {
   useEffect(() => {
     fetchBlogs();
   }, []);
+  const handleOpenArticle = (blog: Blog) => {
+    dispatch(setUserId(blog.userId));
+    dispatch(setName(blog.name));
+    dispatch(setUserPhoto(blog.userPhoto));
+    dispatch(setTitle(blog.title));
+    dispatch(setDescription(blog.description));
+    dispatch(setImage(blog.img));
+    console.log("Open article", blog);
+    console.log("Current article", article);
+    router.push("/article");
+  };
 
   return (
     <main className={styles.main}>
@@ -51,17 +74,18 @@ const Main: React.FC = () => {
           </Link>
         </div>
         {blogs &&
-          blogs.map((blog,index) => {
+          blogs.map((blog, index) => {
             return (
-              <ArticleCard
-                key={index}
-                userPhoto={blog.userPhoto}
-                name={blog.name}
-                title={blog.title}
-                description={blog.description}
-                img={blog.img}
-                // img={"/newStory/blog.jpg"}
-              />
+              <div key={index} onClick={() => handleOpenArticle(blog)}>
+                <ArticleCard
+                  key={index}
+                  userPhoto={blog.userPhoto}
+                  name={blog.name}
+                  title={blog.title}
+                  description={blog.description}
+                  img={blog.img}
+                />
+              </div>
             );
           })}
       </div>

@@ -1,7 +1,4 @@
-// features/blog/blogSlice.ts
-import { useAppSelector } from "@/store/hooks/hooks";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// const { userId, userPhoto, userName } = useAppSelector((state) => state.auth);
 
 interface Blog {
   userId: string;

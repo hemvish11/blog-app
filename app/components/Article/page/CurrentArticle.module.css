@@ -1,0 +1,61 @@
+.articleContainer {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    
+}
+.articleImage{
+    max-width: 400px;
+    margin-inline: auto;
+}
+
+.title {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #242424;
+}
+
+.subtitle {
+    font-size: 18px;
+    font-weight: 300;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.authorSection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.authorImage {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.authorName {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.publicationInfo {
+    font-size: 14px;
+    color: #777;
+}
+
+.line {
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.stats span {
+    font-size: 16px;
+    margin-right: 10px;
+}

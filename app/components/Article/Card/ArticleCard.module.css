@@ -6,6 +6,15 @@
   max-width: 700px;
   margin: 20px 0;
   background-color: #fff;
+  transition: all;
+  
+}
+.card:hover{
+  transition-duration: 300ms;
+  cursor: pointer;
+  scale: 1.02;
+  box-shadow: inset;
+  background-color: #f8f8f8;
 }
 
 .header {
